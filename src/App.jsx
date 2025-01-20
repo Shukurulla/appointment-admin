@@ -6,7 +6,10 @@ import AppointmentService from "./service/appointment.service.js";
 
 const App = () => {
   const { isLoading, appointments } = useSelector((state) => state.appointment);
-
+  const [warning, setWarning] = useState({
+    item: {},
+    state: false,
+  });
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,18 +18,48 @@ const App = () => {
 
   const deleteHandler = async (id) => {
     await AppointmentService.deleteAppointment(dispatch, id);
+    setWarning({ state: false, item: {} });
+  };
+
+  const warningHandler = (item) => {
+    setWarning({ state: true, item: item });
   };
 
   return isLoading ? (
     <Loading />
   ) : (
-    <div className="container py-5">
+    <div className="w-[90%] md:w-[80%] lg:w-[70%] mx-auto py-5">
       <Toaster></Toaster>
+      {warning.state ? (
+        <div className="warning-wrapper">
+          <div className="w-[80%] bg-white p-4 rounded-md">
+            <p>
+              Хотите удалить "<b>{warning.item.name}</b>{" "}
+              <b>{warning.item.date}</b>"?
+            </p>
+            <div className="d-flex mt-3 gap-2">
+              <button
+                className="bg-gray-600  px-2 py-1 rounded-md text-white"
+                onClick={() => setWarning({ state: false, item: {} })}
+              >
+                Отмена
+              </button>
+              <button
+                className="bg-red-600 px-2 py-1 rounded-md text-white"
+                onClick={() => deleteHandler(warning.item.id)}
+              >
+                Удалить
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {appointments.appointments ? (
-        <table className="table table-striped">
+        <table className="table text-[12px] sm:text-[15px] table-striped">
           <thead>
             <tr>
-              <th>№</th>
               <th>Name</th>
               <th>Phone</th>
               <th>Date</th>
@@ -35,17 +68,16 @@ const App = () => {
           </thead>
           <tbody>
             {appointments.appointments.map((item, idx) => (
-              <tr>
-                <td>{idx + 1}</td>
+              <tr className="">
                 <td>{item.name}</td>
                 <td>{item.phone}</td>
-                <td>{item.date}</td>
+                <td>{item.date.slice(0, item.date.length - 3)}</td>
                 <td>
                   <button
-                    className="btn btn-danger"
-                    onClick={() => deleteHandler(item.id)}
+                    className="bg-red-600 px-2 py-1 rounded-md text-white"
+                    onClick={() => warningHandler(item)}
                   >
-                    Delete
+                    <i className="bi text-[12px] sm:text-[15px] bi-trash3"></i>
                   </button>
                 </td>
               </tr>
