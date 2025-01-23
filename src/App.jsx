@@ -39,6 +39,14 @@ const App = () => {
     setWarning({ state: true, item: item });
   };
 
+  const dateToText = (date) => {
+    if (new Date().getDate() == date.slice(0, 2)) {
+      return "сегодня";
+    } else if (new Date().getDate() + 1 == date.slice(0, 2)) {
+      return "завтра";
+    }
+    return date;
+  };
   return isLoading ? (
     <Loading />
   ) : (
@@ -57,7 +65,7 @@ const App = () => {
                 className="cursor-pointer"
                 onClick={() => setShowList(!showList)}
               >
-                {convertDatetime(date).slice(0, 9)}{" "}
+                {dateToText(convertDatetime(date).slice(0, 9))}{" "}
                 <i className="bi bi-chevron-down"></i>
               </li>
               {showList ? (
@@ -78,7 +86,7 @@ const App = () => {
                     onClick={() => handleChange(item)}
                     className="p-2 px-3 cursor-pointer hover:bg-blue-200"
                   >
-                    {convertDatetime(item).slice(0, 9)}
+                    {dateToText(convertDatetime(item).slice(0, 9))}
                   </li>
                 ))}
               </div>
