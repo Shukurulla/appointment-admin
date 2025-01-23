@@ -14,12 +14,11 @@ const App = () => {
     item: {},
     state: false,
   });
-  const [showList, setShowList] = useState(true);
+  const [showList, setShowList] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     AppointmentService.getAppointment(dispatch, date);
-    console.log(date);
   }, []);
   useEffect(() => {
     AppointmentService.getAppointment(dispatch, date);
@@ -45,7 +44,7 @@ const App = () => {
     <div className="w-[90%] md:w-[80%] lg:w-[70%] mx-auto py-5">
       <Toaster></Toaster>
       <div className="row my-3">
-        <div className="col-lg-3 col-md-6 col-sm-12">
+        <div className="col-lg-3 mt-2 col-md-6 col-sm-12">
           <div className="border p-[6px] w-100 rounded-md px-2 flex items-center justify-between">
             <b>дата: </b>
 
@@ -81,19 +80,19 @@ const App = () => {
             </ul>
           </div>
         </div>
-        <div className="col-lg-3 flex items-center col-md-6 col-sm-12">
+        <div className="col-lg-3 mt-2 flex items-center col-md-6 col-sm-12">
           <div className="border p-[6px] w-100 rounded-md px-2 flex items-center justify-between">
             <b>количество клиентов:</b>
             <span>{appointments.total_clients}</span>
           </div>
         </div>
-        <div className="col-lg-3 flex items-center col-md-6 col-sm-12">
+        <div className="col-lg-3 mt-2 flex items-center col-md-6 col-sm-12">
           <div className="border p-[6px] w-100 rounded-md px-2 flex items-center justify-between">
             <b>клиенты приходят:</b>
             <span>{appointments.clients_arrived}</span>
           </div>
         </div>
-        <div className="col-lg-3 flex items-center col-md-6 col-sm-12">
+        <div className="col-lg-3 mt-2 flex items-center col-md-6 col-sm-12">
           <div className="border p-[6px] w-100 rounded-md px-2 flex items-center justify-between">
             <b>клиенты остались:</b>
             <span>{appointments.clients_remaining}</span>
@@ -128,39 +127,41 @@ const App = () => {
       )}
       {appointments.error ? appointments.error : ""}
       {appointments.appointments ? (
-        <table className="table text-[12px] sm:text-[15px] table-striped">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Date</th>
-              <th>Option</th>
-            </tr>
-          </thead>
-          <tbody>
-            {appointments.appointments.map((item, idx) => (
-              <tr className="">
-                <td>{item.name}</td>
-                <td>{item.phone}</td>
-                <td>{item.date.slice(0, item.date.length - 3)}</td>
-                <td>
-                  <button
-                    className="bg-red-600 px-2 py-1 rounded-md text-white"
-                    onClick={() => warningHandler(item)}
-                  >
-                    <i className="bi text-[12px] sm:text-[15px] bi-trash3"></i>
-                  </button>
-                  <a
-                    className="bg-green-700 mx-2 px-2 py-1 rounded-md text-white"
-                    href={`tel:${item.phone}`}
-                  >
-                    <i className="bi text-[12px] sm:text-[15px] bi-telephone"></i>
-                  </a>
-                </td>
+        <div className="w-100 md:overflow-x-scroll">
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Date</th>
+                <th>Option</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {appointments.appointments.map((item, idx) => (
+                <tr className="">
+                  <td>{item.name}</td>
+                  <td>{item.phone}</td>
+                  <td>{item.date.slice(0, item.date.length - 3)}</td>
+                  <td>
+                    <button
+                      className="btn btn-danger  rounded-md text-white"
+                      onClick={() => warningHandler(item)}
+                    >
+                      <i className="bi bi-trash3"></i>
+                    </button>
+                    <a
+                      className="btn btn-success mx-2 rounded-md text-white"
+                      href={`tel:${item.phone}`}
+                    >
+                      <i className="bi bi-telephone"></i>
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
         appointments.message
       )}

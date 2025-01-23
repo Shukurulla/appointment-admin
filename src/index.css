@@ -15,6 +15,9 @@
   top: 0;
   left: 0;
 }
+.table {
+  min-width: 600px;
+}
 .warning-wrapper .warning-box {
   background-color: #fff;
   padding: 30px;
