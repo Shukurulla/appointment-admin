@@ -4,6 +4,11 @@
 .h-full {
   height: 100vh;
 }
+.body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 .warning-wrapper {
   position: absolute;
   width: 100%;

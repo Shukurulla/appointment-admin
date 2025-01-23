@@ -127,7 +127,7 @@ const App = () => {
       )}
       {appointments.error ? appointments.error : ""}
       {appointments.appointments ? (
-        <div className="w-100 md:overflow-x-scroll">
+        <div className="w-100 overflow-x-scroll">
           <table className="table table-striped">
             <thead>
               <tr>
