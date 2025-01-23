@@ -49,7 +49,7 @@ const App = () => {
           <div className="border p-[6px] w-100 rounded-md px-2 flex items-center justify-between">
             <span>
               <i class="fa-solid fa-calendar-days"></i>
-              <span className={`hidden md:inline ml-[10px]`}>дата: </span>
+              <span className={`hidden lg:inline ml-[10px]`}>дата: </span>
             </span>
 
             <ul className="relative">
@@ -89,14 +89,14 @@ const App = () => {
         <div className="col-lg-3 mt-2 flex items-center col-md-3 col-sm-4 col-4">
           <div className="border p-[6px] w-100 rounded-md px-2 flex items-center justify-between">
             <i className="fa-solid fa-users"></i>
-            <span className={`hidden md:block`}>количество клиентов:</span>
+            <span className={`hidden lg:block`}>количество клиентов:</span>
             <span>{appointments.total_clients}</span>
           </div>
         </div>
         <div className="col-lg-3 mt-2 flex items-center col-md-3 col-sm-4 col-4">
           <div className="border p-[6px] w-100 rounded-md px-2 flex items-center justify-between">
             <i class="fa-solid fa-user-check"></i>
-            <span className={`hidden md:block`}>клиенты приходят:</span>
+            <span className={`hidden lg:block`}>клиенты приходят:</span>
 
             <span>{appointments.clients_arrived}</span>
           </div>
@@ -105,7 +105,7 @@ const App = () => {
           <div className="border p-[6px] w-100 rounded-md px-2 flex items-center justify-between">
             <i class="fa-solid fa-user-clock"></i>
 
-            <span className={`hidden md:block`}>клиенты остались:</span>
+            <span className={`hidden lg:block`}>клиенты остались:</span>
 
             <span>{appointments.clients_remaining}</span>
           </div>
