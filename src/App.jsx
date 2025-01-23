@@ -5,6 +5,7 @@ import Loading from "./components/loading/loading.jsx";
 import AppointmentService from "./service/appointment.service.js";
 import { changeDate } from "./slice/appointment.slice.js";
 import getRemainingHoursToday from "./utils/formatDate.js";
+import { convertDatetime } from "./utils/reverseDate.js";
 
 const App = () => {
   const { isLoading, appointments, date } = useSelector(
@@ -44,16 +45,20 @@ const App = () => {
     <div className="w-[90%] md:w-[80%] lg:w-[70%] mx-auto py-5">
       <Toaster></Toaster>
       <div className="row my-3">
-        <div className="col-lg-3 mt-2 col-md-6 col-sm-12">
+        <div className="col-lg-3 mt-2 col-md-3 col-sm-4 col-5">
           <div className="border p-[6px] w-100 rounded-md px-2 flex items-center justify-between">
-            <b>дата: </b>
+            <span>
+              <i class="fa-solid fa-calendar-days"></i>
+              <span className={`hidden md:inline ml-[10px]`}>дата: </span>
+            </span>
 
             <ul className="relative">
               <li
                 className="cursor-pointer"
                 onClick={() => setShowList(!showList)}
               >
-                {date} <i className="bi bi-chevron-down"></i>
+                {convertDatetime(date).slice(0, 9)}{" "}
+                <i className="bi bi-chevron-down"></i>
               </li>
               {showList ? (
                 <div
@@ -66,35 +71,42 @@ const App = () => {
               <div
                 className={`${
                   showList ? "block" : "hidden"
-                } absolute bg-white w-[140px] z-20 left-0 translate-x-[-15px]`}
+                } absolute bg-white h-[50vh] overflow-y-scroll  z-20 right-[-10px] w-[170px] shadow-md`}
               >
                 {getRemainingHoursToday().map((item) => (
                   <li
                     onClick={() => handleChange(item)}
                     className="p-2 px-3 cursor-pointer hover:bg-blue-200"
                   >
-                    {item}
+                    {convertDatetime(item).slice(0, 9)}
                   </li>
                 ))}
               </div>
             </ul>
           </div>
         </div>
-        <div className="col-lg-3 mt-2 flex items-center col-md-6 col-sm-12">
+        <div className="col-sm-12 sm:hidden"></div>
+        <div className="col-lg-3 mt-2 flex items-center col-md-3 col-sm-4 col-4">
           <div className="border p-[6px] w-100 rounded-md px-2 flex items-center justify-between">
-            <b>количество клиентов:</b>
+            <i className="fa-solid fa-users"></i>
+            <span className={`hidden md:block`}>количество клиентов:</span>
             <span>{appointments.total_clients}</span>
           </div>
         </div>
-        <div className="col-lg-3 mt-2 flex items-center col-md-6 col-sm-12">
+        <div className="col-lg-3 mt-2 flex items-center col-md-3 col-sm-4 col-4">
           <div className="border p-[6px] w-100 rounded-md px-2 flex items-center justify-between">
-            <b>клиенты приходят:</b>
+            <i class="fa-solid fa-user-check"></i>
+            <span className={`hidden md:block`}>клиенты приходят:</span>
+
             <span>{appointments.clients_arrived}</span>
           </div>
         </div>
-        <div className="col-lg-3 mt-2 flex items-center col-md-6 col-sm-12">
+        <div className="col-lg-3 mt-2 flex items-center col-md-3 col-sm-4 col-4">
           <div className="border p-[6px] w-100 rounded-md px-2 flex items-center justify-between">
-            <b>клиенты остались:</b>
+            <i class="fa-solid fa-user-clock"></i>
+
+            <span className={`hidden md:block`}>клиенты остались:</span>
+
             <span>{appointments.clients_remaining}</span>
           </div>
         </div>
@@ -142,7 +154,9 @@ const App = () => {
                 <tr className="">
                   <td>{item.name}</td>
                   <td>{item.phone}</td>
-                  <td>{item.date.slice(0, item.date.length - 3)}</td>
+                  <td>
+                    {convertDatetime(item.date.slice(0, item.date.length - 3))}
+                  </td>
                   <td>
                     <button
                       className="btn btn-danger  rounded-md text-white"

@@ -25,3 +25,32 @@ export function convertToISODate(dateString) {
   // Yig'ilgan sanani qaytarish
   return `${year}-${month}-${day}`;
 }
+
+export function convertDatetime(engFormat) {
+  const months = [
+    "январь",
+    "февраль",
+    "март",
+    "апрель",
+    "май",
+    "июнь",
+    "июль",
+    "август",
+    "сентябрь",
+    "октябрь",
+    "ноябрь",
+    "декабрь",
+  ];
+
+  const engDatetime = new Date(engFormat);
+  const day = engDatetime.getDate();
+  const month = months[engDatetime.getMonth()];
+
+  if (isNaN(engDatetime.getHours()) || isNaN(engDatetime.getMinutes())) {
+    return `${day} ${month}`;
+  } else {
+    const hours = String(engDatetime.getHours()).padStart(2, "0");
+    const minutes = String(engDatetime.getMinutes()).padStart(2, "0");
+    return `${day} ${month} ${hours}:${minutes}`;
+  }
+}
