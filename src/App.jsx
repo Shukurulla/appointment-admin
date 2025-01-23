@@ -71,7 +71,7 @@ const App = () => {
               <div
                 className={`${
                   showList ? "block" : "hidden"
-                } absolute bg-white h-[50vh] overflow-y-scroll  z-20 right-[-10px] w-[170px] shadow-md`}
+                } absolute bg-white h-[50vh] overflow-y-scroll  z-20 left-0 w-[170px] shadow-md`}
               >
                 {getRemainingHoursToday().map((item) => (
                   <li
